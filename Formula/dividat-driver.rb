@@ -34,11 +34,14 @@ EOS
   depends_on "dep" => :build
 
   def install
+    # TODO Revert to invoking make for driver 2.2.0 and up
     ENV["GOPATH"] = buildpath
+    ENV["CC"] = "gcc"
+    ENV["CXX"] = "g++"
     cd "src/dividat-driver" do
       system "dep", "ensure"
     end
-    system "make"
+    system "go", "build", "-ldflags", "-X dividat-driver/server.channel=master -X dividat-driver/server.version=2.1.0 -X dividat-driver/update.releaseUrl=https://dist.dividat.com/releases/driver2/", "-o", "bin/dividat-driver", "./src/dividat-driver/main.go"
     bin.install "bin/dividat-driver"
   end
 
