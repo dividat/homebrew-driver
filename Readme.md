@@ -7,6 +7,6 @@
 ```
 brew tap dividat/driver
 brew install dividat-driver
-brew service dividat-driver start
+brew services start dividat-driver
 ```
 
